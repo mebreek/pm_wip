@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Popular Movies 04</string>
+
+    <!--menu-->
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_refresh">Refresh</string>
+
+    <!-- Preferences -->
+    <string name="pref_sort_by_popularity">Popularity</string>
+    <string name="pref_popularity_key">popular</string>
+    <string name ="pref_popularity_default">popular</string>
+    <string-array name="pref_sortby_keys">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="pref_sortby_options">
+        <item>Popularity</item>
+        <item>Highly voted for</item>
+    </string-array>
+
+    <!-- Activities -->
+    <string name="title_activity_details">Details</string>
+    <string name="settings_label">Settings</string>
+</resources>
