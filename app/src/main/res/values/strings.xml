@@ -7,9 +7,9 @@
     <string name="action_refresh">Refresh</string>
 
     <!-- Preferences -->
-    <string name="pref_sort_by_popularity">Popularity</string>
-    <string name="pref_popularity_key">popular</string>
-    <string name ="pref_popularity_default">popular</string>
+    <string name="pref_sort_by">Sort by</string>
+    <string name="pref_popularity_key">1</string>
+    <string name ="pref_popularity_default">1</string>
     <string-array name="pref_sortby_keys">
         <item>1</item>
         <item>2</item>
