@@ -1,14 +1,17 @@
 package net.ibrik.mai.popularmovies04;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,8 +29,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Mohamad on 11/10/2016.
@@ -36,15 +37,16 @@ import java.util.List;
 public class MoviesFragment extends Fragment {
     //private final String TMP_STR_URL = "https://api.themoviedb.org/3/movie/550?api_key=b03e207412a209274acbe55e34899204";
     private final String TMP_STR_URL_POPULAR = "https://api.themoviedb.org/3/movie/popular?api_key=b03e207412a209274acbe55e34899204";
-    //private final String TMP_STR_URL_HIGHEST_RATED = "https://api.themoviedb.org/3/movie/top_rated?api_key=b03e207412a209274acbe55e34899204";
+    private final String TMP_STR_URL_HIGHEST_RATED = "https://api.themoviedb.org/3/movie/top_rated?api_key=b03e207412a209274acbe55e34899204";
 
     private final String LOG_TAG = MoviesFragment.class.getSimpleName();
-
+    private final String LOG_TAG2 = MoviesFragment.FetchMoviesDetails.class.getSimpleName();
     private ArrayAdapter<String> mMoviesArrayAdapter;
-    private String [] strArray;
+    //mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview, new ArrayList<String> );
+    //private String[] strArray;
 
     //constructor
-    public MoviesFragment() {}
+    public MoviesFragment() {    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,23 +61,38 @@ public class MoviesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragmentplaceholder, container, false);
-        strArray = new String[] {"Hello", "There", "How do you do", "star . star"};
-        List<String> mMovieArrayList = new ArrayList<String>(Arrays.asList(strArray));
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if (id == R.id.action_refresh){
+            updateMoviesDetail();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-        mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,strArray );
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragmentplaceholder, container, false);
+        //strArray = new String[] {"Hello", "There", "How do you do", "star . star"};
+        //List<String> mMovieArrayList = new ArrayList<String>(Arrays.asList(strArray));
+        //mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,strArray );
+
+        FetchMoviesDetails fetchMoviesDetails = new FetchMoviesDetails();
+        fetchMoviesDetails.execute("");
+
+        mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,
+                new ArrayList<String>());
         ListView listView = (ListView) rootView.findViewById(
                 R.id.listView_movie);
         listView.setAdapter(mMoviesArrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick (AdapterView<?> parent, View view, int position, long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String strMovie = mMoviesArrayAdapter.getItem(position);
 
                 //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(),  DetailsActivity.class)
+                Intent intent = new Intent(getActivity(), DetailsActivity.class)
                         .putExtra(Intent.EXTRA_TEXT, strMovie);
                 startActivity(intent);
             }
@@ -84,9 +101,23 @@ public class MoviesFragment extends Fragment {
         return rootView;
     }
 
-    public class MoviesDetails extends AsyncTask<String, Void, String[]> {
+    private void updateMoviesDetail() {
+        FetchMoviesDetails fetchMoviesDetails = new FetchMoviesDetails();
+        SharedPreferences pref_sortby = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String sortby = pref_sortby.getString("sortby","1");
+        fetchMoviesDetails.execute("550"); //550 movie id test
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        updateMoviesDetail();
+    }
+
+    public class FetchMoviesDetails extends AsyncTask<String, Void, String[]> {
 
         String[] resultStrs;
+        private URL url;
 
         @Override
         protected String[] doInBackground(String... params) {
@@ -101,6 +132,13 @@ public class MoviesFragment extends Fragment {
                 final String M_ID = "550";
                 final String API = "api_key";
                 final String APIKEY = "=b03e207412a209274acbe55e34899204";
+
+               /* String strParams;
+
+                if (params[0] !=""){
+                    //arguments passed
+                    strParams = params[0];
+                }*/
 
                 // query builder as per lesson
                 /**            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
@@ -118,10 +156,17 @@ public class MoviesFragment extends Fragment {
                         .authority("api.themoviedb.org")
                         .appendPath("3")
                         .appendPath("movie")
-                        .appendQueryParameter("id", params[0]) // the movie ID
+                        //.appendQueryParameter("id", params[0]) // the movie ID
                         .appendQueryParameter(API, APIKEY);
-                // URL url = new URL (builtUri.toString());
-                URL url = new URL(TMP_STR_URL_POPULAR.toString());
+                // set the url "sort by" according to settings
+                SharedPreferences pref_sortby = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String sortby = pref_sortby.getString("sortby","1");
+                if (sortby.equals("1")) {
+                    // URL url = new URL (builtUri.toString());
+                    url = new URL(TMP_STR_URL_POPULAR.toString());
+                } else {
+                    url = new URL(TMP_STR_URL_HIGHEST_RATED);
+                }
                 //Log.v(LOG_TAG, "Built URI " + builtUri.toString());
                 Log.v(LOG_TAG, "URL " + url.toString());
 
@@ -146,7 +191,7 @@ public class MoviesFragment extends Fragment {
                     // buffer for debugging.
                     buffer.append(line + "\n");
                 }
-                Log.v(LOG_TAG, " doInBackground: \n" + buffer.toString());
+                //Log.v(LOG_TAG, " doInBackground: \n" + buffer.toString());
 
                 if (buffer.length() == 0) {
                     // Stream was empty.  No point in parsing.
@@ -177,45 +222,56 @@ public class MoviesFragment extends Fragment {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
-            return resultStrs;
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute (String[] result){
+            if (result != null) {
+                mMoviesArrayAdapter.clear();
+                for (String mMovieStr : result){
+                    mMoviesArrayAdapter.add(mMovieStr);
+                }
+            }
         }
 
         private String[] getMoviesDataFromJson(String movieJsonStr)
                 throws JSONException {
-            final String LOG_TAG2 = MoviesFragment.class.getSimpleName();
+            final String LOG_TAG2 = MoviesFragment.FetchMoviesDetails.class.getSimpleName();
             // These are the names of the JSON objects that need to be extracted.
             final String TMDB_TITLE = "title";
-            final String TMDB_DESCRIPTION = "overview";
-            final String TMPB_ID = "id";
+            final String TMDB_OVERVIEW = "overview";
+            final String TMDB_ID = "id";
+            final String TMDB_RESULTS = "results";
+            final String TMDB_POSTER_PATH = "poster_path";
+            final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
+            String strMovieID, strMovieTitle, strMovieOverview, strMoviePosterPath, strImageURL;
 
             JSONObject movieJson = new JSONObject(movieJsonStr);
-            JSONArray moviesArray = movieJson.getJSONArray(TMDB_TITLE);
-            JSONArray moviesIDarray = movieJson.getJSONArray(TMPB_ID);
+            JSONArray moviesArray = movieJson.getJSONArray(TMDB_RESULTS);
+            //JSONArray moviesIDarray = movieJson.getJSONArray(TMPB_ID);
 
-           /* SharedPreferences sharedPrefs =
-                    PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String unitType = sharedPrefs.getString(
-                    getString(R.string.pref_units_key),
-                    getString(R.string.pref_units_metric));*/
-
+            //Iterate the jsonArray and print the info of JSONObjects
+            String strData;
+            // The return string array
+            String strReturnArray[] = new String [moviesArray.length()];
             for (int i = 0; i < moviesArray.length(); i++) {
-                // For now, using the format "Day, description, hi/low"
-                String day;
-                String description;
+               JSONObject movieObject = moviesArray.getJSONObject(i);
 
-                // Get the JSON object representing the day
-                JSONObject oneMovieJsonObj = moviesArray.getJSONObject(i);
+                strMovieID = movieObject.optString(TMDB_ID);
+                strMovieTitle = movieObject.optString(TMDB_TITLE);
+                strMoviePosterPath = movieObject.optString(TMDB_POSTER_PATH);
+                // build image URL
+                // TODO modify the below (IMAGE_BASE_URL) to be more flexible
+                strImageURL = IMAGE_BASE_URL + strMoviePosterPath;
 
+                strData = "\nMovie id: " + strMovieID + "\nTitle: " + strMovieTitle + "\nImage: " + strImageURL;
 
-                // description is in a child array called "weather", which is 1 element long.
-                JSONObject oneMovieObject = oneMovieJsonObj.getJSONArray(TMDB_TITLE).getJSONObject(0);
-                description = oneMovieObject.getString(TMDB_DESCRIPTION);
+                Log.v(LOG_TAG2, "getMoviesDataFromJson: " + strData);
+                strReturnArray[i] = strData;
             }
-
-            for (String s : resultStrs) {
-                Log.v(LOG_TAG2, "Movie entry: " + s);
-            }
-            return resultStrs;
+            return strReturnArray;
         }
     }
 }

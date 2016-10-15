@@ -5,8 +5,8 @@
 
     <ListPreference
         android:title="@string/pref_sort_by"
-        android:key="@string/pref_popularity_key"
-        android:defaultValue="@string/pref_popularity_default"
+        android:key="@string/pref_sortby_key"
+        android:defaultValue="@string/pref_sortby_default"
         android:entryValues="@array/pref_sortby_keys"
         android:entries="@array/pref_sortby_options"/>
 
