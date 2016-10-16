@@ -1,9 +1,16 @@
 package net.ibrik.mai.popularmovies04;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +19,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Checking if internet connection exits, otherwise inform the user and quit.
+        if (!isOnline()) {
+            AlertDialog.Builder alertDlg = new AlertDialog.Builder(MainActivity.this);
+            alertDlg.setTitle("No network!");
+            alertDlg.setMessage("No network connection ! Make sure there is internet connection and try again. Application will close now.");
+            alertDlg.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(),"Quitting, no network !!!",Toast.LENGTH_LONG);
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dlbx = alertDlg.create();
+            dlbx.show();
+            Log.d("MainActivity", "onCreate: No Network, quitting!");
+            this.finish();
+            System.exit(0);
+        }
+
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_main,new MoviesFragment())
@@ -19,13 +45,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
-        return true;
+    // As per the implementation guide
+    // https://docs.google.com/document/d/1ZlN1fUsCSKuInLECcJkslIqvpKlP7jWL2TP9m6UiA6I/pub?embedded=true#h.easyt9e3rs4y
+    // code below (isOnline) was copied from
+    // http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -36,27 +65,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
- /*   public static class PlaceholderFragment extends Fragment {
-        private ArrayAdapter<String> mMovieAdapter;
-        private String [] strArray;
-
-        public PlaceholderFragment(){}
-
-
-        @Override
-        public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragmentplaceholder, container, false);
-            strArray = new String[] {"Hello", "there", "how do you do", "star . star"};
-            List<String> mMovieArrayList = new ArrayList<String>(Arrays.asList(strArray));
-
-            mMovieAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,strArray );
-            ListView listView = (ListView) rootView.findViewById(
-                    R.id.listView_movie);
-            listView.setAdapter(mMovieAdapter);
-
-            return rootView;
-        }
-    }*/
 }

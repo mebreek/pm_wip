@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * Created by Mohamad on 11/10/2016.
  */
 
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment{
     //private final String TMP_STR_URL = "https://api.themoviedb.org/3/movie/550?api_key=b03e207412a209274acbe55e34899204";
     private final String TMP_STR_URL_POPULAR = "https://api.themoviedb.org/3/movie/popular?api_key=b03e207412a209274acbe55e34899204";
     private final String TMP_STR_URL_HIGHEST_RATED = "https://api.themoviedb.org/3/movie/top_rated?api_key=b03e207412a209274acbe55e34899204";
@@ -83,10 +83,10 @@ public class MoviesFragment extends Fragment {
 
         mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,
                 new ArrayList<String>());
-        ListView listView = (ListView) rootView.findViewById(
-                R.id.listView_movie);
-        listView.setAdapter(mMoviesArrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView gridView = (GridView) rootView.findViewById(
+                R.id.container_gv);
+        gridView.setAdapter(mMoviesArrayAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String strMovie = mMoviesArrayAdapter.getItem(position);
@@ -125,30 +125,14 @@ public class MoviesFragment extends Fragment {
             BufferedReader reader = null;
             String movieJsonStr = null;
 
+
             try {
                 // Construct the URL for the query
-                final String FORECAST_BASE_URL = "https:api.themoviedb.org/3/movie/";
+                final String MOVIE_BASE_URL = "https:api.themoviedb.org/3/movie/";
                 final String QUERY_PARAM = "?";
                 final String M_ID = "550";
                 final String API = "api_key";
                 final String APIKEY = "=b03e207412a209274acbe55e34899204";
-
-               /* String strParams;
-
-                if (params[0] !=""){
-                    //arguments passed
-                    strParams = params[0];
-                }*/
-
-                // query builder as per lesson
-                /**            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                 .appendQueryParameter(QUERY_PARAM, params[0])
-                 .appendQueryParameter(FORMAT_PARAM, format)
-                 .appendQueryParameter(UNITS_PARAM,units)
-                 .appendQueryParameter(DAYS_PARAM,Integer.toString(numDays))
-                 .appendQueryParameter(API, APIKEY)
-                 .build();
-                 **/
 
                 // query builder by Mohamad
                 Uri.Builder builtUri = new Uri.Builder();
@@ -168,7 +152,7 @@ public class MoviesFragment extends Fragment {
                     url = new URL(TMP_STR_URL_HIGHEST_RATED);
                 }
                 //Log.v(LOG_TAG, "Built URI " + builtUri.toString());
-                Log.v(LOG_TAG, "URL " + url.toString());
+                //Log.v(LOG_TAG, "URL " + url.toString());
 
                 // Create the request to the moviedb, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -244,7 +228,10 @@ public class MoviesFragment extends Fragment {
             final String TMDB_ID = "id";
             final String TMDB_RESULTS = "results";
             final String TMDB_POSTER_PATH = "poster_path";
-            final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+            // as per the implementation guide on
+            // https://docs.google.com/document/d/1ZlN1fUsCSKuInLECcJkslIqvpKlP7jWL2TP9m6UiA6I/pub?embedded=true#h.easyt9e3rs4y
+            // recomendation, we're using w185; other options are "w92", "w154", "w185", "w342", "w500", "w780", or "original".
+            final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w185";
 
             String strMovieID, strMovieTitle, strMovieOverview, strMoviePosterPath, strImageURL;
 
@@ -268,10 +255,15 @@ public class MoviesFragment extends Fragment {
 
                 strData = "\nMovie id: " + strMovieID + "\nTitle: " + strMovieTitle + "\nImage: " + strImageURL;
 
-                Log.v(LOG_TAG2, "getMoviesDataFromJson: " + strData);
+                //Log.v(LOG_TAG2, "getMoviesDataFromJson: " + strData);
                 strReturnArray[i] = strData;
             }
             return strReturnArray;
         }
     }
+
+    // The below code was copied from
+    // http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out
+    // as per the implementation guide found at
+    // https://docs.google.com/document/d/1ZlN1fUsCSKuInLECcJkslIqvpKlP7jWL2TP9m6UiA6I/pub?embedded=true#h.bmztf99oydcp
 }

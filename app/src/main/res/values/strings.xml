@@ -22,4 +22,7 @@
     <!-- Activities -->
     <string name="title_activity_details">Details</string>
     <string name="settings_label">Settings</string>
+
+    <!-- Dialog Box -->
+    <string name="dlg_title_noNetwork">No Network</string>
 </resources>
