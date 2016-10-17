@@ -74,9 +74,6 @@ public class MoviesFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-        //strArray = new String[] {"Hello", "There", "How do you do", "star . star"};
-        //List<String> mMovieArrayList = new ArrayList<String>(Arrays.asList(strArray));
-        //mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,strArray );
 
         FetchMoviesDetails fetchMoviesDetails = new FetchMoviesDetails();
         fetchMoviesDetails.execute("");
@@ -185,7 +182,7 @@ public class MoviesFragment extends Fragment{
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
+                // If the code didn't successfully get the data, there's no point in attemping
                 // to parse it.
                 return null;
             } finally {
@@ -233,7 +230,7 @@ public class MoviesFragment extends Fragment{
             // recomendation, we're using w185; other options are "w92", "w154", "w185", "w342", "w500", "w780", or "original".
             final String IMAGE_BASE185_URL = "https://image.tmdb.org/t/p/w185";
             final String IMAGE_BASE92_URL = "https://image.tmdb.org/t/p/w92";
-            String strMovieID, strMovieTitle, strMovieOverview, strMoviePosterPath, strImageURL;
+            String strMovieID, strMovieTitle, strMovieOverview, strMoviePosterPath, strImage92URL, strImage185URL;
 
             JSONObject movieJson = new JSONObject(movieJsonStr);
             JSONArray moviesArray = movieJson.getJSONArray(TMDB_RESULTS);
@@ -252,9 +249,10 @@ public class MoviesFragment extends Fragment{
                 strMovieOverview = movieObject.optString(TMDB_OVERVIEW);
                 // build image URL
                 // TODO modify the below (IMAGE_BASE_URL) to be more flexible
-                strImageURL = IMAGE_BASE185_URL + strMoviePosterPath;
-
-                strData = "\nMovie id: " + strMovieID + "\nTitle: " + strMovieTitle + "\nImage: " + strImageURL + "\nOverview: " + strMovieOverview;
+                //strImage92URL = IMAGE_BASE92_URL + strMoviePosterPath;
+                strImage185URL = IMAGE_BASE185_URL + strMoviePosterPath;
+                //strData = strImage92URL;
+                strData = "\nID: " + strMovieID + ",\nTitle: " + strMovieTitle + ",\nImage: " + strImage185URL + ",\nOverview: " + strMovieOverview;
 
                 //Log.v(LOG_TAG2, "getMoviesDataFromJson: " + strData);
                 strReturnArray[i] = strData;

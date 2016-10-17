@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:id="@+id/container"
@@ -14,15 +13,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/container_top"
         android:background="#DDDDDD"
-        android:layout_weight="0.3"
-        android:gravity="top">
+        android:gravity="center_vertical"
+        android:layout_gravity="top">
 
         <TextView
-            android:text="TextView"
+            android:text="MovieTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/movie_title_moviedetailtest"
-            tools:text="MovieTitle"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#000000"
             android:background="#009688"
@@ -34,64 +32,51 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/container_middle"
-        android:layout_weight="0.6"
-        android:minHeight="250dp">
+        android:id="@+id/container_middle1_moviedetail"
+        android:gravity="center">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/container_middle1a_moviedetail"
-            android:layout_gravity="right">
-
-            <TextView
-                android:text="2015"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/released_moviedetail"
-                android:layout_weight="0.25"
-                android:textAlignment="center"
-                android:gravity="center_vertical"
-                android:hint="Released"
-                android:layout_gravity="left" />
-
-            <TextView
-                android:text="Movie overview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/overview_moviedetail"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:hint="Overview"
-                android:minHeight="60dp"
-                android:scrollbarStyle="outsideOverlay"
-                android:layout_weight="0.25"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/container_middle1b_moviedetail"
-            android:layout_gravity="left">
+            android:id="@+id/released_moviedetail"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:hint="Released"
+            android:layout_gravity="left" />
 
-            <ImageView
-                android:layout_height="278dp"
-                app:srcCompat="@drawable/tmdb_icon_130x116"
-                android:id="@+id/poster_thmb_moviedetail"
-                android:layout_width="185dp" />
-        </LinearLayout>
+        <ImageView
+            android:layout_height="278dp"
+            app:srcCompat="@drawable/tmdb_icon_130x116"
+            android:id="@+id/poster_thmb_moviedetail"
+            android:layout_width="185dp"
+            android:layout_gravity="right" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container_middle2_moviedetail"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/overview_moviedetail"
+            android:layout_gravity="bottom"
+            android:hint="Overview"
+            android:padding="5dp"
+            android:minHeight="80dp"
+            android:gravity="center_vertical" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:id="@+id/container_bottom"
-        android:layout_gravity="bottom|end"
         android:layout_height="wrap_content"
-        android:layout_weight="0.06">
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical">
 
         <TextView
             android:text="Data provided by themoviedb.org TMDB (themoviedb.org) website."

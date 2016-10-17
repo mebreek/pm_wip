@@ -5,43 +5,42 @@
     android:layout_width="match_parent">
 
     <GridView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container_gv"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:numColumns="auto_fit"
         tools:context="net.ibrik.mai.popularmovies04.DetailsActivity"
         tools:ignore="MergeRootFrame"
         android:layout_gravity="top"
-        tools:listfooter="@drawable/tmdb_icon_130x116">
+        android:padding="2dp">
 
         <!--
         <ListView
             android:id="@+id/listView_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />  -->
-
     </GridView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        tools:gravity="bottom|right"
-        android:text="Data provided by TMDB (themoviedb.org) site."
-        android:clickable="false" />
-<LinearLayout
+
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_gravity="bottom">
+    android:layout_gravity="bottom"
+        android:weightSum="1">
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/detail_text" />
-
-</LinearLayout>
+<!--        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/detail_text" />
+-->
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/credit_text"
+            android:text="@string/tmdb_credit"
+            android:layout_weight="1"
+            android:layout_gravity="bottom" />
+    </LinearLayout>
 
 
 </FrameLayout>

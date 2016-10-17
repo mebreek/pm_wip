@@ -58,7 +58,7 @@ public class DetailsActivity extends ActionBarActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * A placeholder fragment
      */
     public static class DetailFragment extends Fragment {
 

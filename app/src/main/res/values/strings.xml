@@ -25,4 +25,7 @@
 
     <!-- Dialog Box -->
     <string name="dlg_title_noNetwork">No Network</string>
+
+    <!-- App string -->
+    <string name="tmdb_credit">Data provided by themoviedb.org website.</string>
 </resources>
