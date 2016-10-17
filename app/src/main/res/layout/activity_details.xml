@@ -1,3 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/container"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container_top"
+        android:background="#DDDDDD"
+        android:layout_weight="0.3"
+        android:gravity="top">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/movie_title_moviedetailtest"
+            tools:text="MovieTitle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#000000"
+            android:background="#009688"
+            android:gravity="center"
+            android:padding="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container_middle"
+        android:layout_weight="0.6"
+        android:minHeight="250dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/container_middle1a_moviedetail"
+            android:layout_gravity="right">
+
+            <TextView
+                android:text="2015"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/released_moviedetail"
+                android:layout_weight="0.25"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:hint="Released"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:text="Movie overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/overview_moviedetail"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:hint="Overview"
+                android:minHeight="60dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:layout_weight="0.25"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/container_middle1b_moviedetail"
+            android:layout_gravity="left">
+
+            <ImageView
+                android:layout_height="278dp"
+                app:srcCompat="@drawable/tmdb_icon_130x116"
+                android:id="@+id/poster_thmb_moviedetail"
+                android:layout_width="185dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:id="@+id/container_bottom"
+        android:layout_gravity="bottom|end"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.06">
+
+        <TextView
+            android:text="Data provided by themoviedb.org TMDB (themoviedb.org) website."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tmdb_credit_textview_moviedetail"
+            android:linksClickable="true"
+            android:layout_weight="0.7"/>
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:srcCompat="@drawable/tmdb_icon_130x116"
+            android:id="@+id/tmdb_icon_imageView_moviedetailtest"
+            android:src="@drawable/tmdb_icon_130x116" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+<!--
 <FrameLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
@@ -6,6 +121,5 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="net.ibrik.mai.popularmovies04.DetailsActivity"
 tools:ignore="MergeRootFrame" >
-
-
 </FrameLayout>
+-->
