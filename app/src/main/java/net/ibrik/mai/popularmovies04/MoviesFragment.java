@@ -71,7 +71,7 @@ public class MoviesFragment extends Fragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
 
@@ -91,6 +91,7 @@ public class MoviesFragment extends Fragment{
                 //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class)
                         .putExtra(Intent.EXTRA_TEXT, strMovie);
+                //intent.putExtra()
                 startActivity(intent);
             }
 
