@@ -28,4 +28,11 @@
 
     <!-- App string -->
     <string name="tmdb_credit">Data provided by themoviedb.org website.</string>
+
+    <!-- activity details -->
+    <string name="movieTitlePlaceholder">Movie Title Placeholder</string>
+    <string name="OverviewSampleText">The short centers on a young sandpiper, the eponymous Piper, who is afraid of the water. She meets a young hermit crab who teaches her the way of the waves</string>
+    <string name="posterthumbnail">Movie Poster Thumbnail</string>
+    <string name="tmdb_logo">The moviedb.org website logo.</string>
+    <string name="releaseddate">Released date</string>
 </resources>
