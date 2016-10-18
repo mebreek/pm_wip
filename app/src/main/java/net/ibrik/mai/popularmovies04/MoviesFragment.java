@@ -210,8 +210,8 @@ public class MoviesFragment extends Fragment{
         protected void onPostExecute (String[] result){
             if (result != null) {
                 mMoviesArrayAdapter.clear();
-                for (String mMovieStr : result){
-                    mMoviesArrayAdapter.add(mMovieStr);
+                for (String strMovieDetail : result){
+                    mMoviesArrayAdapter.add(strMovieDetail);
                 }
             }
         }
@@ -249,7 +249,7 @@ public class MoviesFragment extends Fragment{
                 strMovieOverview = movieObject.optString(TMDB_OVERVIEW);
                 // build image URL
                 // TODO modify the below (IMAGE_BASE_URL) to be more flexible
-                //strImage92URL = IMAGE_BASE92_URL + strMoviePosterPath;
+                strImage92URL = IMAGE_BASE92_URL + strMoviePosterPath;
                 strImage185URL = IMAGE_BASE185_URL + strMoviePosterPath;
                 //strData = strImage92URL;
                 strData = "\nID: " + strMovieID + ",\nTitle: " + strMovieTitle + ",\nImage: " + strImage185URL + ",\nOverview: " + strMovieOverview;
