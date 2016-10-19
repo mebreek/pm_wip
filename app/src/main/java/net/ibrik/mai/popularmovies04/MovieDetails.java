@@ -70,7 +70,7 @@ public class MovieDetails implements Serializable {
     public int getVoteCount () {
         return intVoteCount;
     }
-    public void setIntVoteCount (int intVoteCount ) {
+    public void setVoteCount (int intVoteCount ) {
         this.intVoteCount = intVoteCount;
     }
 

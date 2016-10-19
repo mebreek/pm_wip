@@ -220,12 +220,21 @@ public class MoviesFragment extends Fragment{
         private String[] getMoviesDataFromJson(String movieJsonStr)
                 throws JSONException {
             final String LOG_TAG2 = MoviesFragment.FetchMoviesDetails.class.getSimpleName();
-            // These are the names of the JSON objects that need to be extracted.
+            // These are the JSON objects attributes that need to be extracted.
             final String TMDB_TITLE = "title";
             final String TMDB_OVERVIEW = "overview";
             final String TMDB_ID = "id";
             final String TMDB_RESULTS = "results";
             final String TMDB_POSTER_PATH = "poster_path";
+            final String TMDB_BACKDROP_PATH="backdrop_path";
+            final String TMDB_VOTE_COUNT="vote_count";
+            final String TMDB_VOTE_AVG="vote_average";
+            final String TMDB_ADULT="adult";
+            final String TMDB_VIDEO="video";
+            final String TMDB_RELEASED="release_date";
+            final String TMDB_POPULARITY="popularity";
+
+
             // as per the implementation guide on
             // https://docs.google.com/document/d/1ZlN1fUsCSKuInLECcJkslIqvpKlP7jWL2TP9m6UiA6I/pub?embedded=true#h.easyt9e3rs4y
             // recomendation, we're using w185; other options are "w92", "w154", "w185", "w342", "w500", "w780", or "original".
@@ -243,6 +252,13 @@ public class MoviesFragment extends Fragment{
             String strReturnArray[] = new String [moviesArray.length()];
             for (int i = 0; i < moviesArray.length(); i++) {
                JSONObject movieObject = moviesArray.getJSONObject(i);
+
+
+
+
+
+
+
 
                 strMovieID = movieObject.optString(TMDB_ID);
                 strMovieTitle = movieObject.optString(TMDB_TITLE);

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    private MovieDetails [] movieDetails;
 
     @Override
     public void onResume(){
@@ -36,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    public MovieDetails[] getMovieDetails() {
+        return movieDetails;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
