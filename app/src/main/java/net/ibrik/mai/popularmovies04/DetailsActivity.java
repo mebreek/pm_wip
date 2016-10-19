@@ -64,7 +64,7 @@ public class DetailsActivity extends ActionBarActivity {
 
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
         private static final String Movie_SHARE_HASHTAG = " #PopularMoviesApp";
-        private String mMovieStr;
+        private String strMovie;
 
         public DetailFragment() {
             setHasOptionsMenu(true);
@@ -79,9 +79,9 @@ public class DetailsActivity extends ActionBarActivity {
             // The detail Activity called via intent.  Inspect the intent for forecast data.
             Intent intent = getActivity().getIntent();
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                mMovieStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+                strMovie = intent.getStringExtra(Intent.EXTRA_TEXT);
                 ((TextView) rootView.findViewById(R.id.overview_moviedetail))
-                        .setText(mMovieStr);
+                        .setText(strMovie);
             }
 
             return rootView;
@@ -113,7 +113,7 @@ public class DetailsActivity extends ActionBarActivity {
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT,
-                    mMovieStr + Movie_SHARE_HASHTAG);
+                    strMovie + Movie_SHARE_HASHTAG);
             return shareIntent;
         }
     }
