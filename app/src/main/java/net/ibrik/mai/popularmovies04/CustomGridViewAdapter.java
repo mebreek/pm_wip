@@ -1,0 +1,70 @@
+package net.ibrik.mai.popularmovies04;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+/**
+ * Created by Mohamad on 17/10/2016.
+ */
+
+
+public class CustomGridViewAdapter extends BaseAdapter {
+
+    private Context context;
+    private final String[] gridValues;
+
+    // This is a contructor
+    public CustomGridViewAdapter(Context context, String[] gridValues) {
+        this.context = context;
+        this.gridValues = gridValues;
+    }
+
+    // getView method call depends on gridValues.length;
+    @Override
+    public int getCount() {
+        return gridValues.length;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    public View getView(int position, View view, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View gridView;
+
+        if (view == null) {
+            gridView = new View(context);
+
+            // get layout
+            gridView = inflater.inflate(R.layout.list_item_one_movie, null);
+
+            //set value to textview
+            TextView textView = (TextView) gridView.findViewById(R.id.list_item_one_movie_textview);
+            textView.setText(gridValues[position]);
+
+            //set image (test)
+            ImageView imageView = (ImageView) gridView.findViewById(R.id.list_item_one_movie_imageview);
+            String strImageURL = "https://image.tmdb.org/t/p/w185/5N20rQURev5CNDcMjHVUZhpoCNC.jpg";
+            Picasso.with(context).load(strImageURL).into(imageView);
+        } else {
+            gridView = (View) view;
+        }
+        return gridView;
+    }
+}
+
