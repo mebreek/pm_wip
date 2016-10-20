@@ -126,8 +126,9 @@ public class DetailsActivity extends ActionBarActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT,
-                    strMovie + Movie_SHARE_HASHTAG);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, strTitle+"\n"+ strMovieOverview + "\n" + strPosterPath + Movie_SHARE_HASHTAG );
+//            shareIntent.putExtra(Intent.EXTRA_TEXT,
+//                    strMovie + Movie_SHARE_HASHTAG);
             return shareIntent;
         }
     }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by Mohamad on 17/10/2016.
+ * Created by Mohamad on 12/10/2016.
  */
 
 
@@ -75,10 +75,14 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     private String [] getTitles (String [] strMovies){
         String [] strMovieT = new String [strMovies.length];
+        String strTmp = "";
         int i;
         // if a comma is provided, get the second part of the [] string
         for (i=0; i<strMovies.length; i++){
-            strMovieT[i]=strMovies[i].substring(0,strMovies[i].indexOf(","));
+            strTmp=strMovies[i].substring(0,strMovies[i].indexOf(","));
+            strTmp=strTmp.replaceAll("'","\\\\'");
+            if (strTmp==null){strTmp="Empty";}
+            strMovieT[i]= strTmp;
         }
     return strMovieT;
     }
