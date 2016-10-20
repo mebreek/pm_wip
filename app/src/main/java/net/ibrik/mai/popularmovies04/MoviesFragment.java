@@ -42,6 +42,14 @@ public class MoviesFragment extends Fragment{
     private final String LOG_TAG = MoviesFragment.class.getSimpleName();
     private final String LOG_TAG2 = MoviesFragment.FetchMoviesDetails.class.getSimpleName();
     private ArrayAdapter<String> mMoviesArrayAdapter;
+
+    String [] strMoviesID;
+    String [] strMoviesPosterPath92;
+    String [] strMoviesPosterPath185;
+    String [] strMoviesOverview;
+    String [] strMoviesTitle;
+
+
     //mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview, new ArrayList<String> );
     //private String[] strArray;
 
@@ -90,11 +98,14 @@ public class MoviesFragment extends Fragment{
 
                 //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, strMovie);
+                        .putExtra(Intent.EXTRA_TEXT, strMovie)
+                        .putExtra("movieid",strMoviesID[position])
+                        .putExtra("movietitle",strMoviesTitle[position])
+                        .putExtra("movieoverview", strMoviesOverview[position])
+                        .putExtra("movieposterpath", strMoviesPosterPath185[position]);
                 //intent.putExtra()
                 startActivity(intent);
             }
-
         });
         return rootView;
     }
@@ -240,7 +251,7 @@ public class MoviesFragment extends Fragment{
             // recomendation, we're using w185; other options are "w92", "w154", "w185", "w342", "w500", "w780", or "original".
             final String IMAGE_BASE185_URL = "https://image.tmdb.org/t/p/w185";
             final String IMAGE_BASE92_URL = "https://image.tmdb.org/t/p/w92";
-            String strMovieID, strMovieTitle, strMovieOverview, strMoviePosterPath, strImage92URL, strImage185URL;
+            String strImage92URL, strImage185URL;
 
             JSONObject movieJson = new JSONObject(movieJsonStr);
             JSONArray moviesArray = movieJson.getJSONArray(TMDB_RESULTS);
@@ -250,26 +261,26 @@ public class MoviesFragment extends Fragment{
             String strData;
             // The return string array
             String strReturnArray[] = new String [moviesArray.length()];
+            strMoviesID = new String [moviesArray.length()];
+            strMoviesTitle = new String [moviesArray.length()];
+            strMoviesPosterPath92 = new String [moviesArray.length()];
+            strMoviesPosterPath185= new String [moviesArray.length()];
+            strMoviesOverview = new String [moviesArray.length()];
+
             for (int i = 0; i < moviesArray.length(); i++) {
                JSONObject movieObject = moviesArray.getJSONObject(i);
 
+                //strImage92URL = IMAGE_BASE92_URL + strMoviesPosterPath[i];
+                //strImage185URL = IMAGE_BASE185_URL + strMoviesPosterPath[i];
 
+                strMoviesID [i] = movieObject.optString(TMDB_ID);
+                strMoviesTitle[i] = movieObject.optString(TMDB_TITLE);
+                strMoviesPosterPath92[i] = IMAGE_BASE92_URL + movieObject.optString(TMDB_POSTER_PATH);
+                strMoviesOverview[i] = movieObject.optString(TMDB_OVERVIEW);
+                strMoviesPosterPath185[i] = IMAGE_BASE185_URL +movieObject.optString(TMDB_POSTER_PATH);
 
-
-
-
-
-
-                strMovieID = movieObject.optString(TMDB_ID);
-                strMovieTitle = movieObject.optString(TMDB_TITLE);
-                strMoviePosterPath = movieObject.optString(TMDB_POSTER_PATH);
-                strMovieOverview = movieObject.optString(TMDB_OVERVIEW);
-                // build image URL
-                // TODO modify the below (IMAGE_BASE_URL) to be more flexible
-                strImage92URL = IMAGE_BASE92_URL + strMoviePosterPath;
-                strImage185URL = IMAGE_BASE185_URL + strMoviePosterPath;
                 //strData = strImage92URL;
-                strData = "\nID: " + strMovieID + ",\nTitle: " + strMovieTitle + ",\nImage: " + strImage185URL + ",\nOverview: " + strMovieOverview;
+                strData = "\nID: " + strMoviesID [i] + ",\nTitle: " + strMoviesTitle[i] + ",\nImage: " + IMAGE_BASE185_URL + ",\nOverview: " + strMoviesOverview[i];
 
                 //Log.v(LOG_TAG2, "getMoviesDataFromJson: " + strData);
                 strReturnArray[i] = strData;

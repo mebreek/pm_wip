@@ -17,7 +17,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 
 public class DetailsActivity extends ActionBarActivity {
@@ -65,7 +68,9 @@ public class DetailsActivity extends ActionBarActivity {
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
         private static final String Movie_SHARE_HASHTAG = " #PopularMoviesApp";
         private String strMovie;
-
+        private String strMovieOverview;
+        private String strPosterPath;
+        private String strTitle;
         public DetailFragment() {
             setHasOptionsMenu(true);
         }
@@ -75,13 +80,22 @@ public class DetailsActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.activity_details, container, false);
+            //View rootView = getActivity().findViewById(R.id.container_sv);
 
             // The detail Activity called via intent.  Inspect the intent for forecast data.
             Intent intent = getActivity().getIntent();
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 strMovie = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.overview_moviedetail))
-                        .setText(strMovie);
+                strTitle = intent.getStringExtra("movietitle");
+                strMovieOverview = intent.getStringExtra("movieoverview");
+                TextView overview_view = (TextView) getActivity().findViewById(R.id.overview_moviedetail);
+                overview_view.setText(strMovieOverview);
+                TextView title_view =(TextView) getActivity().findViewById(R.id.movie_title_moviedetail);
+                title_view.setText(strTitle);
+                ImageView imageView = (ImageView) getActivity().findViewById(R.id.poster_moviedetail);
+                strMovieOverview = intent.getStringExtra("movieoverview");
+                strPosterPath = intent.getStringExtra("movieposterpath");
+                Picasso.with(getContext()).load(strPosterPath).into(imageView);
             }
 
             return rootView;
