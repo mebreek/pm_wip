@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * Created by Mohamad on 11/10/2016.
@@ -48,6 +47,7 @@ public class MoviesFragment extends Fragment{
     String [] strMoviesPosterPath185;
     String [] strMoviesOverview;
     String [] strMoviesTitle;
+    String [] strMovieSTRING;
 
 
     //mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview, new ArrayList<String> );
@@ -86,27 +86,30 @@ public class MoviesFragment extends Fragment{
         FetchMoviesDetails fetchMoviesDetails = new FetchMoviesDetails();
         fetchMoviesDetails.execute("");
 
-        mMoviesArrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,
-                new ArrayList<String>());
-        GridView gridView = (GridView) rootView.findViewById(
-                R.id.container_gv);
-        gridView.setAdapter(mMoviesArrayAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String strMovie = mMoviesArrayAdapter.getItem(position);
-
-                //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), DetailsActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, strMovie)
-                        .putExtra("movieid",strMoviesID[position])
-                        .putExtra("movietitle",strMoviesTitle[position])
-                        .putExtra("movieoverview", strMoviesOverview[position])
-                        .putExtra("movieposterpath", strMoviesPosterPath185[position]);
-                //intent.putExtra()
-                startActivity(intent);
-            }
-        });
+//        //mMoviesArrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,
+//        //       new ArrayList<String>());
+//        GridView gridView = (GridView) getActivity().findViewById(R.id.container_gv);
+//        //if (strMovieSTRING != null) {
+//            CustomGridViewAdapter customGridViewAdapter = new CustomGridViewAdapter(getContext(), strMovieSTRING);
+//            gridView.setAdapter(customGridViewAdapter);
+//
+//            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    //String strMovie = customGridViewAdapter.getItem(position);
+//                    String strMovie = " todel string";
+//                    //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getActivity(), DetailsActivity.class)
+//                            .putExtra(Intent.EXTRA_TEXT, strMovie)
+//                            .putExtra("movieid",strMoviesID[position])
+//                            .putExtra("movietitle",strMoviesTitle[position])
+//                            .putExtra("movieoverview", strMoviesOverview[position])
+//                            .putExtra("movieposterpath", strMoviesPosterPath185[position]);
+//                    //intent.putExtra()
+//                    startActivity(intent);
+//                }
+//            });
+//        //}
         return rootView;
     }
 
@@ -221,12 +224,35 @@ public class MoviesFragment extends Fragment{
         @Override
         protected void onPostExecute (String[] result){
             if (result != null) {
-                mMoviesArrayAdapter.clear();
+/*                mMoviesArrayAdapter.clear();
                 for (String strMovieDetail : result){
-                    mMoviesArrayAdapter.add(strMovieDetail);
-                }
+                    mMoviesArrayAdapter.add(strMovieDetail);*/
+
+                GridView gridView = (GridView) getActivity().findViewById(R.id.container_gv);
+                //if (strMovieSTRING != null) {
+                CustomGridViewAdapter customGridViewAdapter = new CustomGridViewAdapter(getContext(), strMovieSTRING);
+                gridView.setAdapter(customGridViewAdapter);
+
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //String strMovie = customGridViewAdapter.getItem(position);
+                        String strMovie = " todel string";
+                        //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), DetailsActivity.class)
+                                .putExtra(Intent.EXTRA_TEXT, strMovie)
+                                .putExtra("movieid", strMoviesID[position])
+                                .putExtra("movietitle", strMoviesTitle[position])
+                                .putExtra("movieoverview", strMoviesOverview[position])
+                                .putExtra("movieposterpath", strMoviesPosterPath185[position]);
+                        //intent.putExtra()
+                        startActivity(intent);
+                    }
+                });
             }
         }
+
+
 
         private String[] getMoviesDataFromJson(String movieJsonStr)
                 throws JSONException {
@@ -261,11 +287,13 @@ public class MoviesFragment extends Fragment{
             String strData;
             // The return string array
             String strReturnArray[] = new String [moviesArray.length()];
+            //initialize String arrays
             strMoviesID = new String [moviesArray.length()];
             strMoviesTitle = new String [moviesArray.length()];
             strMoviesPosterPath92 = new String [moviesArray.length()];
             strMoviesPosterPath185= new String [moviesArray.length()];
             strMoviesOverview = new String [moviesArray.length()];
+            strMovieSTRING = new String[moviesArray.length()];
 
             for (int i = 0; i < moviesArray.length(); i++) {
                JSONObject movieObject = moviesArray.getJSONObject(i);
@@ -279,8 +307,9 @@ public class MoviesFragment extends Fragment{
                 strMoviesOverview[i] = movieObject.optString(TMDB_OVERVIEW);
                 strMoviesPosterPath185[i] = IMAGE_BASE185_URL +movieObject.optString(TMDB_POSTER_PATH);
 
-                //strData = strImage92URL;
-                strData = "\nID: " + strMoviesID [i] + ",\nTitle: " + strMoviesTitle[i] + ",\nImage: " + IMAGE_BASE185_URL + ",\nOverview: " + strMoviesOverview[i];
+                strData = strMoviesTitle [i] + "," + strMoviesPosterPath92[i] ;
+                strMovieSTRING [i]= strData;
+                //strData = "\nID: " + strMoviesID [i] + ",\nTitle: " + strMoviesTitle[i] + ",\nImage: " + IMAGE_BASE185_URL + ",\nOverview: " + strMoviesOverview[i];
 
                 //Log.v(LOG_TAG2, "getMoviesDataFromJson: " + strData);
                 strReturnArray[i] = strData;

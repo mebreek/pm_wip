@@ -19,11 +19,17 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     private Context context;
     private final String[] gridValues;
+    private String strMoviesTitles[];
+    private String strMoviesPosters[];
 
     // This is a contructor
     public CustomGridViewAdapter(Context context, String[] gridValues) {
         this.context = context;
         this.gridValues = gridValues;
+        if (gridValues != null){
+            strMoviesTitles=getTitles(gridValues);
+            strMoviesPosters = getImageURLs(gridValues);
+        }
     }
 
     // getView method call depends on gridValues.length;
@@ -55,16 +61,35 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
             //set value to textview
             TextView textView = (TextView) gridView.findViewById(R.id.list_item_one_movie_textview);
-            textView.setText(gridValues[position]);
+            textView.setText(strMoviesTitles[position]);
 
             //set image (test)
             ImageView imageView = (ImageView) gridView.findViewById(R.id.list_item_one_movie_imageview);
-            String strImageURL = "https://image.tmdb.org/t/p/w185/5N20rQURev5CNDcMjHVUZhpoCNC.jpg";
+            String strImageURL = strMoviesPosters[position];//"https://image.tmdb.org/t/p/w185/5N20rQURev5CNDcMjHVUZhpoCNC.jpg";
             Picasso.with(context).load(strImageURL).into(imageView);
         } else {
             gridView = (View) view;
         }
         return gridView;
+    }
+
+    private String [] getTitles (String [] strMovies){
+        String [] strMovieT = new String [strMovies.length];
+        int i;
+        // if a comma is provided, get the second part of the [] string
+        for (i=0; i<strMovies.length; i++){
+            strMovieT[i]=strMovies[i].substring(0,strMovies[i].indexOf(","));
+        }
+    return strMovieT;
+    }
+
+    private String [] getImageURLs (String [] strMovies){
+        String [] strMovieIURL = new String [strMovies.length];
+        int i;
+        for (i=0; i<strMovies.length; i++){
+            strMovieIURL[i]=strMovies[i].substring(strMovies[i].indexOf(",")+1,strMovies[i].length());
+        }
+        return strMovieIURL;
     }
 }
 

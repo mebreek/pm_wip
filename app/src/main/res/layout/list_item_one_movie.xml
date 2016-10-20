@@ -10,14 +10,14 @@
 
     <ImageView
         android:id="@+id/list_item_one_movie_imageview"
-        android:layout_width="178dp"
-        android:layout_height="285dp"
-        android:contentDescription="@string/moviethumbnail"/>
+        android:layout_height="138dp"
+        android:contentDescription="@string/moviethumbnail"
+        android:layout_width="92dp" />
 
     <TextView
-        android:layout_width="178dp"
         android:layout_height="wrap_content"
         android:id="@+id/list_item_one_movie_textview"
         android:padding="10dp"
-        android:gravity="left" />
+        android:gravity="left"
+        android:layout_width="92dp" />
 </LinearLayout>
