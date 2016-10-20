@@ -78,7 +78,7 @@ public class MoviesFragment extends Fragment{
         FetchMoviesDetails fetchMoviesDetails = new FetchMoviesDetails();
         fetchMoviesDetails.execute("");
 
-        mMoviesArrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,
+        mMoviesArrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.list_item_one_movie, R.id.list_item_one_movie_textview,
                 new ArrayList<String>());
         GridView gridView = (GridView) rootView.findViewById(
                 R.id.container_gv);
@@ -277,9 +277,4 @@ public class MoviesFragment extends Fragment{
             return strReturnArray;
         }
     }
-
-    // The below code was copied from
-    // http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out
-    // as per the implementation guide found at
-    // https://docs.google.com/document/d/1ZlN1fUsCSKuInLECcJkslIqvpKlP7jWL2TP9m6UiA6I/pub?embedded=true#h.bmztf99oydcp
 }

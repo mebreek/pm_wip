@@ -11,12 +11,13 @@
     <ImageView
         android:id="@+id/list_item_one_movie_imageview"
         android:layout_width="178dp"
-        android:layout_height="285dp" />
+        android:layout_height="285dp"
+        android:contentDescription="@string/moviethumbnail"/>
 
     <TextView
         android:layout_width="178dp"
         android:layout_height="wrap_content"
         android:id="@+id/list_item_one_movie_textview"
         android:padding="10dp"
-        android:gravity="right" />
+        android:gravity="left" />
 </LinearLayout>

@@ -16,11 +16,10 @@
         android:paddingRight="5dp"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="top|center_horizontal"
         tools:context="net.ibrik.mai.popularmovies04.DetailsActivity"
         tools:ignore="MergeRootFrame"
-        android:horizontalSpacing="5dp"
-        android:layout_alignParentBottom="?android:attr/windowIsFloating">
+        android:horizontalSpacing="5dp">
     </GridView>
 
     <TextView
