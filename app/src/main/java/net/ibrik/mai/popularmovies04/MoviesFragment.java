@@ -34,10 +34,8 @@ import java.net.URL;
  */
 
 public class MoviesFragment extends Fragment{
-    //private final String TMP_STR_URL = "https://api.themoviedb.org/3/movie/550?api_key=b03e207412a209274acbe55e34899204";
-    private final String TMP_STR_URL_POPULAR = "https://api.themoviedb.org/3/movie/popular?api_key=b03e207412a209274acbe55e34899204";
-    private final String TMP_STR_URL_HIGHEST_RATED = "https://api.themoviedb.org/3/movie/top_rated?api_key=b03e207412a209274acbe55e34899204";
-
+    private final String TMP_STR_URL_POPULAR = "https://api.themoviedb.org/3/movie/popular?api_key=" + APIKEY;
+    private final String TMP_STR_URL_HIGHEST_RATED = "https://api.themoviedb.org/3/movie/top_rated?api_key="+  APIKEY;
     private final String LOG_TAG = MoviesFragment.class.getSimpleName();
     private final String LOG_TAG2 = MoviesFragment.FetchMoviesDetails.class.getSimpleName();
     private ArrayAdapter<String> mMoviesArrayAdapter;
